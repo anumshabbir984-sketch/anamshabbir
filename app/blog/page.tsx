@@ -25,8 +25,8 @@ export default function Blog() {
             slug: 'chatgpt-prompt-guide',
         },
         {
-            title: 'Next.js 14: What's New and Why It Matters',
-      excerpt: 'Explore the latest features in Next.js 14 and how they can improve your web development workflow.',
+            title: 'Next.js 14: What is New and Why It Matters',
+            excerpt: 'Explore the latest features in Next.js 14 and how they can improve your web development workflow.',
             date: 'November 25, 2024',
             category: 'Web Development',
             readTime: '10 min read',
