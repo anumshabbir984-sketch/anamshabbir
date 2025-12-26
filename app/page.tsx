@@ -184,12 +184,13 @@ export default function Home() {
       </section>
 
       {/* Timeline Section */}
-      <section className="bg-black py-20 overflow-hidden">
+      {/* Timeline Section */}
+      <section className="bg-gray-50 dark:bg-black py-20 overflow-hidden">
         <div className="container-custom mb-10 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
             My Workflow
           </h2>
-          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             How I bring projects from concept to reality
           </p>
         </div>
