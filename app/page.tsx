@@ -2,6 +2,10 @@ import Button from '@/components/Button';
 import ServiceCard from '@/components/ServiceCard';
 import ProjectCard from '@/components/ProjectCard';
 import HomepageTimeline from '@/components/HomepageTimeline';
+import TechStackMarquee from '@/components/TechStackMarquee';
+import Testimonials from '@/components/Testimonials';
+import BlogPreview from '@/components/BlogPreview';
+import ContactSection from '@/components/ContactSection';
 
 export default function Home() {
   const services = [
@@ -142,6 +146,8 @@ export default function Home() {
         </div>
       </section>
 
+      <TechStackMarquee />
+
       {/* Services Section */}
       <section className="section-padding bg-white dark:bg-gray-900">
         <div className="container-custom">
@@ -190,6 +196,8 @@ export default function Home() {
         <HomepageTimeline />
       </section>
 
+      <Testimonials />
+
       {/* Featured Projects Section */}
       <section className="section-padding bg-gray-50 dark:bg-gray-800">
         <div className="container-custom">
@@ -225,31 +233,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="section-padding relative overflow-hidden">
-        {/* Background */}
-        <div className="absolute inset-0 gradient-primary opacity-95"></div>
-        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
+      <BlogPreview />
 
-        <div className="container-custom relative z-10">
-          <div className="max-w-3xl mx-auto text-center text-white">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Ready to Start Your Project?
-            </h2>
-            <p className="text-xl mb-8 opacity-90">
-              Let's work together to bring your vision to life. Whether you need SEO optimization, AI solutions, or a stunning website, I'm here to help.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button href="/contact" variant="secondary" size="lg">
-                Contact Me
-              </Button>
-              <Button href="/services" variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-primary-600">
-                View Services
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ContactSection />
     </div>
   );
 }

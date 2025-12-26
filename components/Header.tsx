@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { ThemeToggle } from './ThemeToggle';
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -27,11 +28,10 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
           ? 'bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-lg'
           : 'bg-transparent'
-      }`}
+        }`}
     >
       <nav className="container-custom">
         <div className="flex items-center justify-between h-20">
@@ -58,8 +58,9 @@ export default function Header() {
             ))}
           </div>
 
-          {/* CTA Button - Desktop */}
-          <div className="hidden md:block">
+          {/* CTA Button & Theme Toggle - Desktop */}
+          <div className="hidden md:flex items-center space-x-4">
+            <ThemeToggle />
             <Link
               href="/contact"
               className="px-6 py-3 rounded-full gradient-primary text-white font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300"
@@ -69,32 +70,35 @@ export default function Header() {
           </div>
 
           {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-            aria-label="Toggle menu"
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+          <div className="md:hidden flex items-center space-x-4">
+            <ThemeToggle />
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              aria-label="Toggle menu"
             >
-              {isMobileMenuOpen ? (
-                <path d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </button>
+              <svg
+                className="w-6 h-6 dark:text-gray-200"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                {isMobileMenuOpen ? (
+                  <path d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
+          </div>
         </div>
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden py-4 animate-fade-in">
+          <div className="md:hidden py-4 animate-fade-in bg-white dark:bg-gray-900 absolute top-20 left-0 right-0 shadow-xl border-t dark:border-gray-800 px-4">
             <div className="flex flex-col space-y-2">
               {navLinks.map((link) => (
                 <Link
