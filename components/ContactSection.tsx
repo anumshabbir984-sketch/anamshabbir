@@ -50,17 +50,17 @@ export default function ContactSection() {
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div className="space-y-2">
                                     <label htmlFor="name" className="text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
-                                    <input type="text" id="name" className="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-primary-500 transition-colors text-gray-900 dark:text-white" placeholder="John Doe" />
+                                    <input type="text" id="name" className="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-primary-500 transition-colors text-gray-900 dark:text-white" placeholder="John Doe" />
                                 </div>
                                 <div className="space-y-2">
                                     <label htmlFor="email" className="text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
-                                    <input type="email" id="email" className="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-primary-500 transition-colors text-gray-900 dark:text-white" placeholder="john@example.com" />
+                                    <input type="email" id="email" className="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-primary-500 transition-colors text-gray-900 dark:text-white" placeholder="john@example.com" />
                                 </div>
                             </div>
 
                             <div className="space-y-2">
                                 <label htmlFor="subject" className="text-sm font-medium text-gray-700 dark:text-gray-300">Subject</label>
-                                <select id="subject" className="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-primary-500 transition-colors text-gray-600 dark:text-gray-400">
+                                <select id="subject" className="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-primary-500 transition-colors text-gray-600 dark:text-gray-400">
                                     <option value="">Select a topic</option>
                                     <option value="seo">SEO Optimization</option>
                                     <option value="web">Web Development</option>
@@ -71,7 +71,7 @@ export default function ContactSection() {
 
                             <div className="space-y-2">
                                 <label htmlFor="message" className="text-sm font-medium text-gray-700 dark:text-gray-300">Message</label>
-                                <textarea id="message" rows={4} className="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-primary-500 transition-colors text-gray-900 dark:text-white" placeholder="Tell me about your project..."></textarea>
+                                <textarea id="message" rows={4} className="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-primary-500 transition-colors text-gray-900 dark:text-white" placeholder="Tell me about your project..."></textarea>
                             </div>
 
                             <Button size="lg" className="w-full bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white font-bold py-4">

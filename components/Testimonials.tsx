@@ -26,7 +26,7 @@ const testimonials = [
 
 export default function Testimonials() {
     return (
-        <section className="section-padding bg-gray-50 dark:bg-gray-800/50">
+        <section className="section-padding bg-white dark:bg-gray-800/50">
             <div className="container-custom">
                 <div className="text-center mb-16">
                     <h2 className="text-4xl md:text-5xl font-bold mb-4 gradient-text">

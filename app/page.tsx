@@ -185,7 +185,7 @@ export default function Home() {
 
       {/* Timeline Section */}
       {/* Timeline Section */}
-      <section className="bg-gray-50 dark:bg-black py-20 overflow-hidden">
+      <section className="bg-white dark:bg-black py-20 overflow-hidden">
         <div className="container-custom mb-10 text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
             My Workflow
@@ -200,7 +200,7 @@ export default function Home() {
       <Testimonials />
 
       {/* Featured Projects Section */}
-      <section className="section-padding bg-gray-50 dark:bg-gray-800">
+      <section className="section-padding bg-white dark:bg-gray-800">
         <div className="container-custom">
           {/* Section Header */}
           <div className="text-center mb-16">
