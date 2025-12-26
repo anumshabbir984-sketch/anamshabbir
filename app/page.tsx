@@ -1,6 +1,7 @@
 import Button from '@/components/Button';
 import ServiceCard from '@/components/ServiceCard';
 import ProjectCard from '@/components/ProjectCard';
+import HomepageTimeline from '@/components/HomepageTimeline';
 
 export default function Home() {
   const services = [
@@ -174,6 +175,19 @@ export default function Home() {
             </Button>
           </div>
         </div>
+      </section>
+
+      {/* Timeline Section */}
+      <section className="bg-black py-20 overflow-hidden">
+        <div className="container-custom mb-10 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">
+            My Workflow
+          </h2>
+          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+            How I bring projects from concept to reality
+          </p>
+        </div>
+        <HomepageTimeline />
       </section>
 
       {/* Featured Projects Section */}
