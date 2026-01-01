@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // @ts-expect-error: Turbopack layout config might be top-level in this version
+  turbopack: {
+    root: process.cwd(),
+  },
 };
 
 export default nextConfig;
