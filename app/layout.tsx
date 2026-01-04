@@ -85,6 +85,7 @@ export const metadata: Metadata = {
 };
 
 import { ThemeProvider } from "@/components/ThemeProvider";
+import SocialSticky from "@/components/SocialSticky";
 
 // ... existing imports
 
@@ -104,6 +105,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <SocialSticky />
           <Header />
           <main className="min-h-screen">
             {children}
@@ -114,4 +116,5 @@ export default function RootLayout({
     </html>
   );
 }
+
 

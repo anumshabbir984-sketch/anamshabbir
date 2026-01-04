@@ -1,9 +1,16 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Mail, MapPin, Send } from "lucide-react";
 
 export default function ContactSection() {
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
     return (
         <section className="section-padding relative overflow-hidden bg-white dark:bg-black text-gray-900 dark:text-white">
             {/* Background Elements */}
@@ -46,41 +53,48 @@ export default function ContactSection() {
                     </div>
 
                     <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md p-8 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-2xl animate-slide-in-right">
-                        <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div className="space-y-2">
-                                    <label htmlFor="name" className="text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
-                                    <input type="text" id="name" className="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-primary-500 transition-colors text-gray-900 dark:text-white" placeholder="John Doe" />
+                        {mounted ? (
+                            <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div className="space-y-2">
+                                        <label htmlFor="name" className="text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
+                                        <input type="text" id="name" className="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-primary-500 transition-colors text-gray-900 dark:text-white" placeholder="John Doe" />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label htmlFor="email" className="text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
+                                        <input type="email" id="email" className="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-primary-500 transition-colors text-gray-900 dark:text-white" placeholder="john@example.com" />
+                                    </div>
                                 </div>
+
                                 <div className="space-y-2">
-                                    <label htmlFor="email" className="text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
-                                    <input type="email" id="email" className="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-primary-500 transition-colors text-gray-900 dark:text-white" placeholder="john@example.com" />
+                                    <label htmlFor="subject" className="text-sm font-medium text-gray-700 dark:text-gray-300">Subject</label>
+                                    <select id="subject" className="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-primary-500 transition-colors text-gray-600 dark:text-gray-400">
+                                        <option value="">Select a topic</option>
+                                        <option value="seo">SEO Optimization</option>
+                                        <option value="web">Web Development</option>
+                                        <option value="ai">AI / Prompt Engineering</option>
+                                        <option value="other">Other</option>
+                                    </select>
                                 </div>
-                            </div>
 
-                            <div className="space-y-2">
-                                <label htmlFor="subject" className="text-sm font-medium text-gray-700 dark:text-gray-300">Subject</label>
-                                <select id="subject" className="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-primary-500 transition-colors text-gray-600 dark:text-gray-400">
-                                    <option value="">Select a topic</option>
-                                    <option value="seo">SEO Optimization</option>
-                                    <option value="web">Web Development</option>
-                                    <option value="ai">AI / Prompt Engineering</option>
-                                    <option value="other">Other</option>
-                                </select>
-                            </div>
+                                <div className="space-y-2">
+                                    <label htmlFor="message" className="text-sm font-medium text-gray-700 dark:text-gray-300">Message</label>
+                                    <textarea id="message" rows={4} className="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-primary-500 transition-colors text-gray-900 dark:text-white" placeholder="Tell me about your project..."></textarea>
+                                </div>
 
-                            <div className="space-y-2">
-                                <label htmlFor="message" className="text-sm font-medium text-gray-700 dark:text-gray-300">Message</label>
-                                <textarea id="message" rows={4} className="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-primary-500 transition-colors text-gray-900 dark:text-white" placeholder="Tell me about your project..."></textarea>
+                                <Button size="lg" className="w-full bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white font-bold py-4">
+                                    Send Message <Send className="ml-2 w-4 h-4" />
+                                </Button>
+                            </form>
+                        ) : (
+                            <div className="h-[400px] flex items-center justify-center">
+                                <div className="animate-pulse text-gray-400">Loading form...</div>
                             </div>
-
-                            <Button size="lg" className="w-full bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white font-bold py-4">
-                                Send Message <Send className="ml-2 w-4 h-4" />
-                            </Button>
-                        </form>
+                        )}
                     </div>
                 </div>
             </div>
         </section>
     );
 }
+
