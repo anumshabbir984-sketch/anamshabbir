@@ -36,9 +36,20 @@ export default function RadialOrbitalTimeline({
         y: 0,
     });
     const [activeNodeId, setActiveNodeId] = useState<number | null>(null);
+    const [isMobile, setIsMobile] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const orbitRef = useRef<HTMLDivElement>(null);
     const nodeRefs = useRef<Record<number, HTMLDivElement | null>>({});
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
         if (e.target === containerRef.current || e.target === orbitRef.current) {
@@ -71,7 +82,8 @@ export default function RadialOrbitalTimeline({
                 });
                 setPulseEffect(newPulseEffect);
 
-                centerViewOnNode(id);
+                // Use a slight timeout to allow the expansion animation to start before centering
+                setTimeout(() => centerViewOnNode(id), 100);
             } else {
                 setActiveNodeId(null);
                 setAutoRotate(true);
@@ -106,14 +118,21 @@ export default function RadialOrbitalTimeline({
 
         const nodeIndex = timelineData.findIndex((item) => item.id === nodeId);
         const totalNodes = timelineData.length;
+
+        // Calculate the angle where the node currently is
+        // We want to bring this node to the bottom (270 degrees) or top (90 degrees)
+        // For mobile, maybe bottom is better as cards open upwards? 
+        // Or top if cards open downwards.
+
         const targetAngle = (nodeIndex / totalNodes) * 360;
 
+        // Rotate so the node is at 270 degrees (bottom center)
         setRotationAngle(270 - targetAngle);
     };
 
     const calculateNodePosition = (index: number, total: number) => {
         const angle = ((index / total) * 360 + rotationAngle) % 360;
-        const radius = 200;
+        const radius = isMobile ? 120 : 200; // Smaller radius for mobile
         const radian = (angle * Math.PI) / 180;
 
         const x = radius * Math.cos(radian) + centerOffset.x;
@@ -154,29 +173,39 @@ export default function RadialOrbitalTimeline({
 
     return (
         <div
-            className="w-full h-full flex flex-col items-center justify-center bg-gray-50 dark:bg-black overflow-hidden relative"
+            className="w-full h-full flex flex-col items-center justify-center bg-gray-50 dark:bg-black overflow-hidden relative touch-pan-y"
             ref={containerRef}
             onClick={handleContainerClick}
         >
+            {/* Added instruction text for mobile users */}
+            {isMobile && !activeNodeId && (
+                <div className="absolute top-4 left-0 right-0 text-center z-10 animate-pulse px-4">
+                    <span className="text-xs text-gray-500 bg-white/50 dark:bg-black/50 px-3 py-1 rounded-full backdrop-blur-sm">
+                        Tap nodes to explore workflow
+                    </span>
+                </div>
+            )}
+
             <div className="relative w-full max-w-4xl h-full flex items-center justify-center">
                 <div
-                    className="absolute w-full h-full flex items-center justify-center"
+                    className="absolute w-full h-full flex items-center justify-center transition-transform duration-500"
                     ref={orbitRef}
                     style={{
                         perspective: "1000px",
                         transform: `translate(${centerOffset.x}px, ${centerOffset.y}px)`,
                     }}
                 >
-                    <div className="absolute w-16 h-16 rounded-full bg-gradient-to-br from-purple-500 via-blue-500 to-teal-500 animate-pulse flex items-center justify-center z-10">
-                        <div className="absolute w-20 h-20 rounded-full border border-primary-200 dark:border-white/20 animate-ping opacity-70"></div>
+                    <div className="absolute w-12 h-12 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-purple-500 via-blue-500 to-teal-500 animate-pulse flex items-center justify-center z-10">
+                        <div className="absolute w-16 h-16 md:w-20 md:h-20 rounded-full border border-primary-200 dark:border-white/20 animate-ping opacity-70"></div>
                         <div
-                            className="absolute w-24 h-24 rounded-full border border-primary-100 dark:border-white/10 animate-ping opacity-50"
+                            className="absolute w-20 h-20 md:w-24 md:h-24 rounded-full border border-primary-100 dark:border-white/10 animate-ping opacity-50"
                             style={{ animationDelay: "0.5s" }}
                         ></div>
-                        <div className="w-8 h-8 rounded-full bg-white/80 backdrop-blur-md"></div>
+                        <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-white/80 backdrop-blur-md"></div>
                     </div>
 
-                    <div className="absolute w-96 h-96 rounded-full border border-gray-200 dark:border-white/10"></div>
+                    {/* Responsive orbit circle size */}
+                    <div className={`absolute rounded-full border border-gray-200 dark:border-white/10 ${isMobile ? 'w-60 h-60' : 'w-96 h-96'}`}></div>
 
                     {timelineData.map((item, index) => {
                         const position = calculateNodePosition(index, timelineData.length);
@@ -216,41 +245,57 @@ export default function RadialOrbitalTimeline({
 
                                 <div
                                     className={`
-                  w-10 h-10 rounded-full flex items-center justify-center
-                  ${isExpanded
+                                        rounded-full flex items-center justify-center
+                                        ${isMobile ? 'w-8 h-8' : 'w-10 h-10'}
+                                        ${isExpanded
                                             ? "bg-primary-600 text-white dark:bg-white dark:text-black"
                                             : isRelated
                                                 ? "bg-white dark:bg-white/50 text-primary-600 dark:text-black border-primary-400"
                                                 : "bg-white dark:bg-black text-gray-700 dark:text-white"
                                         }
-                  border-2 
-                  ${isExpanded
+                                        border-2 
+                                        ${isExpanded
                                             ? "border-primary-600 dark:border-white shadow-lg shadow-primary-500/30 dark:shadow-white/30"
                                             : isRelated
                                                 ? "border-primary-400 dark:border-white animate-pulse"
                                                 : "border-gray-200 dark:border-white/40"
                                         }
-                  transition-all duration-300 transform
-                  ${isExpanded ? "scale-150" : ""}
-                `}
+                                        transition-all duration-300 transform
+                                        ${isExpanded ? "scale-150" : ""}
+                                    `}
                                 >
-                                    <Icon size={16} />
+                                    <Icon size={isMobile ? 14 : 16} />
                                 </div>
 
                                 <div
                                     className={`
-                  absolute top-12  whitespace-nowrap
-                  text-xs font-semibold tracking-wider
-                  transition-all duration-300
-                  ${isExpanded ? "text-primary-700 dark:text-white scale-125" : "text-gray-500 dark:text-white/70"}
-                `}
+                                    absolute top-12  whitespace-nowrap
+                                    text-xs font-semibold tracking-wider
+                                    transition-all duration-300
+                                    ${isExpanded ? "text-primary-700 dark:text-white scale-125" : "text-gray-500 dark:text-white/70"}
+                                    ${isMobile && !isExpanded ? "opacity-0" : "opacity-100"} 
+                                    `}
+                                // Hide labels on mobile unless expanding to reduce clutter
                                 >
                                     {item.title}
                                 </div>
 
                                 {isExpanded && (
-                                    <Card className="absolute top-20 left-1/2 -translate-x-1/2 w-64 bg-white/90 dark:bg-black/90 backdrop-blur-lg border-gray-200 dark:border-white/30 shadow-xl shadow-gray-200/50 dark:shadow-white/10 overflow-visible z-50">
-                                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-px h-3 bg-gray-300 dark:bg-white/50"></div>
+                                    <Card
+                                        className={`
+                                            absolute left-1/2 -translate-x-1/2 
+                                            bg-white/95 dark:bg-black/95 backdrop-blur-lg border-gray-200 dark:border-white/30 shadow-xl shadow-gray-200/50 dark:shadow-white/10 overflow-visible z-50
+                                            ${isMobile
+                                                ? 'w-[85vw] max-w-[300px] fixed top-1/2 left-1/2 z-[100]'
+                                                : 'w-64 top-20'
+                                            }
+                                        `}
+                                        style={isMobile ? { transform: 'translate(-50%, -50%)' } : {}}
+                                        onClick={(e) => e.stopPropagation()}
+                                    >
+                                        {!isMobile && (
+                                            <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-px h-3 bg-gray-300 dark:bg-white/50"></div>
+                                        )}
                                         <CardHeader className="pb-2">
                                             <div className="flex justify-between items-center">
                                                 <Badge

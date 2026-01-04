@@ -63,7 +63,7 @@ const timelineData = [
 
 export default function HomepageTimeline() {
     return (
-        <div className="h-[800px] relative">
+        <div className="h-[600px] md:h-[800px] relative">
             <RadialOrbitalTimeline timelineData={timelineData} />
         </div>
     );
